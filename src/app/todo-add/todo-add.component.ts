@@ -12,13 +12,10 @@ import { Todo } from "../todo";
 })
 export class TodoAddComponent implements OnInit {
 
+  private todos$: Observable<Todo[]>
+  public todoForm: FormGroup
 
-
-  constructor(private todoService: TodoService,
-              private todos$: Observable<Todo[]>,
-              public todoForm: FormGroup) { }
-
-  ngOnInit() {
+  constructor(private todoService: TodoService) {
     this.todos$ = this.todoService.todos$;
     this.todoForm = new FormGroup({
       id: new FormControl(''),
@@ -26,9 +23,13 @@ export class TodoAddComponent implements OnInit {
     })
   }
 
+  ngOnInit() {
+
+  }
+
   onSubmit(){
     this.todoService.create(this.todoForm.value);
-    this.todoForm.get('value')?.setValue('');
+    this.todoForm.get('valueTodo')?.setValue('');
   }
 
 }
