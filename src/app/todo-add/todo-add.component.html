@@ -1,1 +1,8 @@
-<p>todo-add works!</p>
+<div>
+  <form [formGroup]="todoForm" (submit)="onSubmit()">
+    <p>
+      <input type="text" id="valueTodo" name="valueTodo" formControlName="valueTodo">
+    </p>
+    <button type="submit">Add Todo</button>
+  </form>
+</div>

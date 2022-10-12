@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+
+import { TodoService } from "../todo.service";
+import { Todo } from "../todo";
 
 @Component({
   selector: 'app-todo-add',
@@ -7,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoAddComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
+
+  constructor(private todoService: TodoService,
+              private todos$: Observable<Todo[]>,
+              public todoForm: FormGroup) { }
+
+  ngOnInit() {
+    this.todos$ = this.todoService.todos$;
+    this.todoForm = new FormGroup({
+      id: new FormControl(''),
+      valueTodo: new FormControl('', Validators.required)
+    })
+  }
+
+  onSubmit(){
+    this.todoService.create(this.todoForm.value);
+    this.todoForm.get('value')?.setValue('');
   }
 
 }
