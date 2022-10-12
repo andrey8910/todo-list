@@ -1,4 +1,15 @@
-<div *ngFor="let todo of todos$ | async">
-  {{todo.id}}{{todo.valueTodo}}
-  <button (click)="deleteTodo(todo.id)">x</button>
+<div class="list_todo">
+  <div class="block_todo-filter">
+    <span>TODO</span>
+    <span>DONE</span>
+    <span>ALL</span>
+  </div>
+  <div class="item_list-todo" *ngFor="let todo of todos$ | async" >
+    <input class="check_done-todo" type="checkbox">
+    <span class="todo_id">{{todo.id}}</span>
+    <span class="todo_value">{{todo.valueTodo}}</span>
+
+    <button (click)="deleteTodo(todo.id)">x</button>
+  </div>
 </div>
+

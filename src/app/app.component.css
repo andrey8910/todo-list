@@ -1,0 +1,10 @@
+.block_todo-list{
+  width: 100%;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding-top: 100px;
+  background-color: slategray;
+}
