@@ -18,10 +18,12 @@ export class TodoListComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  todoIsDone(ev: any, todoId: number){
+    console.log(ev.target.checked)
+  }
   deleteTodo(todoId: number){
     this.todoService.remote(todoId)
-    console.log(this.todos$)
+
   }
 
 }

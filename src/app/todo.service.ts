@@ -33,4 +33,8 @@ export class TodoService {
       this.todoSubject.next(Object.assign([], this.todos));
     })
   }
+
+  isDone(ev:Event){
+
+  }
 }

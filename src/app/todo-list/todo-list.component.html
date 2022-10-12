@@ -5,7 +5,7 @@
     <span>ALL</span>
   </div>
   <div class="item_list-todo" *ngFor="let todo of todos$ | async" >
-    <input class="check_done-todo" type="checkbox">
+    <input class="check_done-todo" type="checkbox" (click)="todoIsDone($event, todo.id)">
     <span class="todo_id">{{todo.id}}</span>
     <span class="todo_value">{{todo.valueTodo}}</span>
 
