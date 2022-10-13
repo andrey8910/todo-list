@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Observable } from "rxjs";
 import { Todo } from "../todo";
 import { TodoService } from "../todo.service";
@@ -9,21 +9,26 @@ import { TodoService } from "../todo.service";
   styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit {
-  public todos$: Observable<Todo[]>;
+  public todos$: Observable<Todo[]> = this.todoService.todos$;
 
   constructor(private todoService: TodoService) {
-    this.todos$ = this.todoService.todos$
+    //this.todos$ = this.todoService.todos$
   }
 
   ngOnInit(): void {
+  //this.todoService.loadAll();
+  }
 
+  filterTodo(howTo: string){
+   this.todoService.filter(howTo);
   }
-  todoIsDone(ev: any, todoId: number){
-    console.log(ev.target.checked)
+
+  todoIsDone(todoId: number){
+    this.todoService.isDone(todoId);
   }
+
   deleteTodo(todoId: number){
     this.todoService.remote(todoId)
-
   }
 
 }

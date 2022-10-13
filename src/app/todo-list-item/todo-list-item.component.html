@@ -1,0 +1,7 @@
+<div class="item_list-todo" *ngFor="let todo of todos$" >
+  <input class="check_done-todo" type="checkbox" (click)="isDoneItem(todo.id)" [checked]="todo.done">
+  <span class="todo_id">№{{todo.id}}</span>
+  <span class="todo_value" [ngClass]="{'todo-done_value' : todo.done}">{{todo.valueTodo}}</span>
+  <button>edit</button>
+  <button (click)="deleteItem(todo.id)" >x</button>
+</div>

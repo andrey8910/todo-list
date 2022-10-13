@@ -1,15 +1,16 @@
 <div class="list_todo">
   <div class="block_todo-filter">
-    <span>TODO</span>
-    <span>DONE</span>
-    <span>ALL</span>
+    <span (click)="filterTodo('todo')">TODO</span>
+    <span (click)="filterTodo('done')">DONE</span>
+    <span (click)="filterTodo('all')">ALL</span>
   </div>
-  <div class="item_list-todo" *ngFor="let todo of todos$ | async" >
-    <input class="check_done-todo" type="checkbox" (click)="todoIsDone($event, todo.id)">
-    <span class="todo_id">{{todo.id}}</span>
-    <span class="todo_value">{{todo.valueTodo}}</span>
+  <app-todo-list-item
+    [todos$]= "todos$ | async"
+    (deleteTodoItem) = 'deleteTodo($event)'
+    (isDoneTodoItem) = 'todoIsDone($event)'
+  >
 
-    <button (click)="deleteTodo(todo.id)">x</button>
-  </div>
+  </app-todo-list-item>
+
 </div>
 

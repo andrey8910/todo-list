@@ -11,7 +11,7 @@
 .block_todo-filter{
   font-size: 12px;
   width: 380px;
-  height: 20px;
+  padding: 5px;
   background-color: azure;
   display: flex;
   justify-content: end;
@@ -23,26 +23,4 @@
   cursor: pointer;
   background-color: lightgray;
 }
-.item_list-todo{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 380px;
-  border: 1px solid dimgray;
-  background-color: azure;
 
-}
-.item_list-todo button{
-  flex: 0 0 10%;
-  cursor: pointer;
-}
-.check_done-todo{
-  flex: 0 0 5%;
-  cursor: pointer;
-}
-.todo_id{
-  flex: 0 0 5%;
-}
-.todo_value{
-  flex: 1 1 80%;
-}

@@ -6,25 +6,34 @@ import { Todo } from './todo';
   providedIn: 'root'
 })
 export class TodoService {
-
   private todoSubject = new BehaviorSubject<Todo[]>([]);
   readonly  todos$ = this.todoSubject.asObservable();
   private todos: Todo[] = [];
+  public todosFiltered : Todo[] = [];
   private nextId = 0;
 
   constructor() { }
 
   loadAll(){
-    this.todos = [];
+    this.todos = [
+
+    ];
     this.todoSubject.next(this.todos);
   }
-
   create(item:Todo){
     item.id = ++this.nextId;
+    item.done = false;
     this.todos.push(item);
     this.todoSubject.next(Object.assign([],this.todos))
   }
-
+  isDone(id:number){
+    this.todos.forEach((t) => {
+      if(t.id === id){
+        t.done = !t.done;
+      }
+      this.todoSubject.next(Object.assign([], this.todos));
+    })
+  }
   remote(id:number){
     this.todos.forEach((t,i) => {
       if (t.id === id){
@@ -34,7 +43,20 @@ export class TodoService {
     })
   }
 
-  isDone(ev:Event){
+  filter(howTo: string): any{
 
+    if(howTo == 'todo'){
+      this.todosFiltered = this.todos.filter((el:Todo) => {
+       return !el.done
+      })
+      this.todoSubject.next(Object.assign([], this.todosFiltered));
+    }else if(howTo == 'done'){
+      this.todosFiltered = this.todos.filter((el:Todo) => {
+        return el.done
+      })
+      this.todoSubject.next(Object.assign([], this.todosFiltered));
+    }else if(howTo == 'all'){
+      this.todoSubject.next(Object.assign([], this.todos));
+    }
   }
 }

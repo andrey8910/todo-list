@@ -1,0 +1,28 @@
+.item_list-todo{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  width: 380px;
+  padding: 5px;
+  border: 1px solid dimgray;
+  background-color: azure;
+
+}
+.item_list-todo button{
+  flex: 0 0 10%;
+  cursor: pointer;
+}
+.check_done-todo{
+  flex: 0 0 5%;
+  cursor: pointer;
+}
+.todo-done_value{
+  text-decoration: line-through 1px ;
+}
+.todo_id{
+  flex: 0 0 5%;
+}
+.todo_value{
+  flex: 1 1 70%;
+}
