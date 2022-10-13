@@ -21,6 +21,7 @@ export class TodoService {
     this.todoSubject.next(this.todos);
   }
   create(item:Todo){
+
     item.id = ++this.nextId;
     item.done = false;
     this.todos.push(item);
@@ -34,6 +35,15 @@ export class TodoService {
       this.todoSubject.next(Object.assign([], this.todos));
     })
   }
+  edit(todoValue:string, id:number){
+
+    this.todos.forEach((t:Todo) => {
+      if(t.id === id){
+        t.valueTodo = todoValue;
+      }
+      this.todoSubject.next(Object.assign([], this.todos));
+    })
+  }
   remote(id:number){
     this.todos.forEach((t,i) => {
       if (t.id === id){
@@ -43,7 +53,7 @@ export class TodoService {
     })
   }
 
-  filter(howTo: string): any{
+  filter(howTo: string){
 
     if(howTo == 'todo'){
       this.todosFiltered = this.todos.filter((el:Todo) => {

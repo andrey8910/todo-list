@@ -1,4 +1,4 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Observable } from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
@@ -18,8 +18,7 @@ export class TodoAddComponent implements OnInit {
   constructor(private todoService: TodoService) {
     this.todos$ = this.todoService.todos$;
     this.todoForm = new FormGroup({
-      done: new FormControl(),
-      id: new FormControl(''),
+
       valueTodo: new FormControl('', Validators.required)
     })
   }
@@ -31,7 +30,7 @@ export class TodoAddComponent implements OnInit {
   onSubmit(){
     this.todoService.create(this.todoForm.value);
     this.todoForm.get('valueTodo')?.setValue('');
-    //console.log(this.todoForm)
+
   }
 
 }

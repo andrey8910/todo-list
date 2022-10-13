@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { TodoService } from "../todo.service";
 
 import {Todo} from "../todo";
 
@@ -13,7 +14,7 @@ export class TodoListItemComponent implements OnInit {
   @Input() todos$: Todo[] | null = []
   @Output() deleteTodoItem = new EventEmitter<number>();
   @Output() isDoneTodoItem = new EventEmitter<number>();
-  constructor() {
+  constructor(private todoService: TodoService) {
 
   }
 
@@ -23,8 +24,32 @@ export class TodoListItemComponent implements OnInit {
   isDoneItem(todoId: number){
     this.isDoneTodoItem.emit(todoId);
   }
+
+  editItem(todoTextValue:HTMLElement, todoId: number){
+    todoTextValue.textContent = '';
+
+    const inputTodoText = document.createElement('input');
+    const buttonSaveTodoText = document.createElement('button');
+
+    inputTodoText.type = 'text';
+    inputTodoText.classList.add('focused');
+    buttonSaveTodoText.innerText = 'save';
+
+
+    buttonSaveTodoText.addEventListener('click', () => {
+      todoTextValue.textContent = inputTodoText.value;
+      this.todoService.edit(inputTodoText.value, todoId)
+
+    })
+
+    todoTextValue.append(inputTodoText);
+    todoTextValue.append(buttonSaveTodoText);
+
+  }
   deleteItem(todoId: number){
     this.deleteTodoItem.emit(todoId);
   }
+
+
 
 }
