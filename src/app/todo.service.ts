@@ -21,11 +21,15 @@ export class TodoService {
     this.todoSubject.next(this.todos);
   }
   create(item:Todo){
+    if(item.valueTodo.length > 0){
+      item.id = ++this.nextId;
+      item.done = false;
+      this.todos.push(item);
+      this.todoSubject.next(Object.assign([],this.todos))
+    }else{
+      alert('enter text !')
+    }
 
-    item.id = ++this.nextId;
-    item.done = false;
-    this.todos.push(item);
-    this.todoSubject.next(Object.assign([],this.todos))
   }
   isDone(id:number){
     this.todos.forEach((t) => {

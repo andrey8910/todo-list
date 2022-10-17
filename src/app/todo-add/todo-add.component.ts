@@ -18,7 +18,6 @@ export class TodoAddComponent implements OnInit {
   constructor(private todoService: TodoService) {
     this.todos$ = this.todoService.todos$;
     this.todoForm = new FormGroup({
-
       valueTodo: new FormControl('', Validators.required)
     })
   }

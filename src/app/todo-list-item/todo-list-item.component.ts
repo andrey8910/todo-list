@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { TodoService } from "../todo.service";
-
+import { ElementRef, Renderer2 } from "@angular/core";
 import {Todo} from "../todo";
 
 
@@ -14,7 +14,9 @@ export class TodoListItemComponent implements OnInit {
   @Input() todos$: Todo[] | null = []
   @Output() deleteTodoItem = new EventEmitter<number>();
   @Output() isDoneTodoItem = new EventEmitter<number>();
-  constructor(private todoService: TodoService) {
+  constructor(private todoService: TodoService,
+              private el: ElementRef,
+              private renderer: Renderer2,) {
 
   }
 
@@ -26,24 +28,30 @@ export class TodoListItemComponent implements OnInit {
   }
 
   editItem(todoTextValue:HTMLElement, todoId: number){
+
+    const inputTodoText = this.renderer.createElement('input')
+    const buttonSaveTodoText: HTMLElement = this.renderer.createElement('button');
+
+    inputTodoText.setAttribute('type', 'text');
+    inputTodoText.setAttribute('autofocus', true);
+    inputTodoText.setAttribute('value', todoTextValue.innerText);
+
     todoTextValue.textContent = '';
-
-    const inputTodoText = document.createElement('input');
-    const buttonSaveTodoText = document.createElement('button');
-
-    inputTodoText.type = 'text';
-    inputTodoText.classList.add('focused');
     buttonSaveTodoText.innerText = 'save';
+    buttonSaveTodoText.innerText = 'save';
+
 
 
     buttonSaveTodoText.addEventListener('click', () => {
       todoTextValue.textContent = inputTodoText.value;
       this.todoService.edit(inputTodoText.value, todoId)
 
-    })
-
-    todoTextValue.append(inputTodoText);
-    todoTextValue.append(buttonSaveTodoText);
+      })
+    this.renderer.appendChild(todoTextValue, inputTodoText);
+    this.renderer.appendChild(todoTextValue, buttonSaveTodoText)
+    //todoTextValue.append(inputTodoText);
+   // todoTextValue.append(buttonSaveTodoText);
+   // todoTextValue.append(buttonSaveTodoText);
 
   }
   deleteItem(todoId: number){
