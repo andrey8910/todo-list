@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject} from "rxjs";
+import { TodoLocalStorageService } from "./todo-local-storage.service";
 import { Todo } from './todo';
 
 @Injectable({
@@ -10,14 +11,22 @@ export class TodoService {
   readonly  todos$ = this.todoSubject.asObservable();
   private todos: Todo[] = [];
   public todosFiltered : Todo[] = [];
-  private nextId = 0;
+  private nextId: number = 0;
 
-  constructor() { }
+  constructor(private localStorageService: TodoLocalStorageService) { }
 
   loadAll(){
-    this.todos = [
-
-    ];
+    if(localStorage.getItem('todos') !== null){
+      this.todos = this.localStorageService.todoGetLocalStorage('todos');
+      this.nextId = this.todos.reduce((prev:Todo, cur: Todo) => {
+        if(prev.id > cur.id){
+          return prev
+        }
+          return cur
+      }).id
+    }else {
+      this.todos =[];
+    }
     this.todoSubject.next(this.todos);
   }
   create(item:Todo){
@@ -26,16 +35,18 @@ export class TodoService {
       item.done = false;
       this.todos.push(item);
       this.todoSubject.next(Object.assign([],this.todos))
+      this.localStorageService.todoSetLocalStorage('todos', this.todos)
     }else{
       alert('enter text !')
     }
 
   }
   isDone(id:number){
-    this.todos.forEach((t) => {
+    this.todos.forEach((t:Todo) => {
       if(t.id === id){
         t.done = !t.done;
       }
+      this.localStorageService.todoSetLocalStorage('todos', this.todos);
       this.todoSubject.next(Object.assign([], this.todos));
     })
   }
@@ -52,8 +63,15 @@ export class TodoService {
     this.todos.forEach((t,i) => {
       if (t.id === id){
         this.todos.splice(i, 1);
+        this.nextId = this.todos.reduce((prev:Todo, cur: Todo) => {
+          if(prev.id > cur.id){
+            return prev
+          }
+          return cur
+        }).id
       }
       this.todoSubject.next(Object.assign([], this.todos));
+      this.localStorageService.todoSetLocalStorage('todos', this.todos)
     })
   }
 

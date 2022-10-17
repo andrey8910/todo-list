@@ -23,7 +23,7 @@ export class TodoAddComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.todoService.loadAll()
   }
 
   onSubmit(){

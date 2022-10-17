@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter} from '@angular/core';
 import { TodoService } from "../todo.service";
-import { ElementRef, Renderer2 } from "@angular/core";
+import { ElementRef, Renderer2, ViewChild } from "@angular/core";
 import {Todo} from "../todo";
 
 
@@ -10,10 +10,12 @@ import {Todo} from "../todo";
   templateUrl: './todo-list-item.component.html',
   styleUrls: ['./todo-list-item.component.css']
 })
-export class TodoListItemComponent implements OnInit {
+export class TodoListItemComponent implements OnInit ,AfterViewInit {
   @Input() todos$: Todo[] | null = []
   @Output() deleteTodoItem = new EventEmitter<number>();
   @Output() isDoneTodoItem = new EventEmitter<number>();
+  @ViewChild('todoText') todoInputText: any;
+
   constructor(private todoService: TodoService,
               private el: ElementRef,
               private renderer: Renderer2,) {
@@ -22,6 +24,9 @@ export class TodoListItemComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+  ngAfterViewInit() {
+    //this.todoInputText.nativeElement.focus();
   }
   isDoneItem(todoId: number){
     this.isDoneTodoItem.emit(todoId);
@@ -34,11 +39,13 @@ export class TodoListItemComponent implements OnInit {
 
     inputTodoText.setAttribute('type', 'text');
     inputTodoText.setAttribute('autofocus', true);
-    inputTodoText.setAttribute('value', todoTextValue.innerText);
+    inputTodoText.setAttribute('value', todoTextValue.textContent);
 
+
+    //console.log(this.todoInputText.nativeElement.children[0])
     todoTextValue.textContent = '';
     buttonSaveTodoText.innerText = 'save';
-    buttonSaveTodoText.innerText = 'save';
+
 
 
 
@@ -48,7 +55,9 @@ export class TodoListItemComponent implements OnInit {
 
       })
     this.renderer.appendChild(todoTextValue, inputTodoText);
-    this.renderer.appendChild(todoTextValue, buttonSaveTodoText)
+    this.renderer.appendChild(todoTextValue, buttonSaveTodoText);
+
+    //this.todoTextValue.nativeElement.children[0].focus();
     //todoTextValue.append(inputTodoText);
    // todoTextValue.append(buttonSaveTodoText);
    // todoTextValue.append(buttonSaveTodoText);

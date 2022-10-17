@@ -8,10 +8,11 @@ export class TodoLocalStorageService {
 
   constructor() { }
 
-  public todoGetLocalStorage(key: string): string | null{
-    return localStorage.getItem(key);
+  public todoGetLocalStorage(key: string):any{
+    const todoLS: any = localStorage.getItem(key);
+    return JSON.parse(todoLS);
   }
-  public todoSetLocalStorage(key: string, value: Todo){
+  public todoSetLocalStorage(key: string, value: Todo[]){
     localStorage.setItem(key, JSON.stringify(value));
   }
   public todoRemoveLocalStorage(key: string): void{
