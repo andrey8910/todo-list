@@ -12,11 +12,11 @@ export class TodoListComponent implements OnInit {
   public todos$: Observable<Todo[]> = this.todoService.todos$;
 
   constructor(private todoService: TodoService) {
-    //this.todos$ = this.todoService.todos$
+
   }
 
   ngOnInit(): void {
-  //this.todoService.loadAll();
+
   }
 
   filterTodo(howTo: string){
@@ -27,8 +27,9 @@ export class TodoListComponent implements OnInit {
     this.todoService.isDone(todoId);
   }
 
-  editTodo(todoId: number ){
-    this.todoService.edit(todoId)
+  editTodo( value: {inputValue: string, todoId: number} ){
+    this.todoService.edit(value)
+
   }
 
   deleteTodo(todoId: number){

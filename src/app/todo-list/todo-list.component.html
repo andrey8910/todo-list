@@ -4,13 +4,13 @@
     <span (click)="filterTodo('done')">DONE</span>
     <span (click)="filterTodo('all')">ALL</span>
   </div>
-  <app-todo-list-item
-    [todos$]= "todos$ | async"
+
+  <app-todo-list-item *ngFor="let todo of todos$ | async"
+    [todo]= "todo"
     (deleteTodoItem) = 'deleteTodo($event)'
     (isDoneTodoItem) = 'todoIsDone($event)'
     (editTodoItem)= 'editTodo($event)'
   >
-
   </app-todo-list-item>
 
 </div>

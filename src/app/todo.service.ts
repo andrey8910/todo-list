@@ -29,18 +29,15 @@ export class TodoService {
     }
     this.todoSubject.next(this.todos);
   }
+
   create(item:Todo){
-    if(item.valueTodo.length > 0){
       item.id = ++this.nextId;
       item.done = false;
       this.todos.push(item);
       this.todoSubject.next(Object.assign([],this.todos))
       this.localStorageService.todoSetLocalStorage('todos', this.todos)
-    }else{
-      alert('enter text !')
-    }
-
   }
+
   isDone(id:number){
     this.todos.forEach((t:Todo) => {
       if(t.id === id){
@@ -50,20 +47,23 @@ export class TodoService {
       this.todoSubject.next(Object.assign([], this.todos));
     })
   }
-  edit( id:number){
+
+  edit( value: {inputValue: string, todoId: number}){
 
     this.todos.forEach((t:Todo) => {
-      if(t.id === id){
-        //t.valueTodo = todoValue;
+      if(t.id === value.todoId){
+       t.valueTodo = value.inputValue;
       }
       this.todoSubject.next(Object.assign([], this.todos));
+      this.localStorageService.todoSetLocalStorage('todos', this.todos)
     })
   }
+
   remote(id:number){
     if(this.todos.length == 1){
       this.todos = [];
       this.todoSubject.next(Object.assign([], this.todos));
-      this.localStorageService.todoSetLocalStorage('todos', this.todos)
+      this.localStorageService.todoRemoveLocalStorage('todos')
     }else if(this.todos.length > 1){
       this.todos.forEach((t,i) => {
         if (t.id === id){
@@ -77,7 +77,6 @@ export class TodoService {
         }
         this.todoSubject.next(Object.assign([], this.todos));
         this.localStorageService.todoSetLocalStorage('todos', this.todos)
-        console.log(this.todos)
 
       })
     }

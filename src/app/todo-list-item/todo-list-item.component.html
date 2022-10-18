@@ -1,4 +1,4 @@
-<div class="item_list-todo" *ngFor="let todo of todos$" >
+<div class="item_list-todo"  >
   <input class="check_done-todo" type="checkbox" (click)="isDoneItem(todo.id)" [checked]="todo.done">
   <span class="todo_id">№{{todo.id}}</span>
   <span
@@ -8,8 +8,8 @@
     [ngClass]="{'todo-done_value' : todo.done}
 ">{{todo.valueTodo}}</span>
   <span class="todo_value_edit" *ngIf="showBlockEditTodo">
-    <input type="text">
-    <button (click)="editItem(todo.id)">save</button>
+    <input #editTodoInput type="text" [value]= 'todo.valueTodo'>
+    <button (click)="editItem(editTodoInput.value, todo.id)">save</button>
   </span>
   <button (click)="showEditTodo()">edit</button>
   <button (click)="deleteItem(todo.id)" >x</button>
