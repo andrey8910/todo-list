@@ -26,6 +26,9 @@
 .todo_value{
   flex: 1 1 70%;
 }
+.todo_value_edit{
+  flex: 1 1 70%;
+}
 .focused {
   font-size: 24px;
   background-color: dimgray;

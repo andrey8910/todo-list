@@ -50,29 +50,38 @@ export class TodoService {
       this.todoSubject.next(Object.assign([], this.todos));
     })
   }
-  edit(todoValue:string, id:number){
+  edit( id:number){
 
     this.todos.forEach((t:Todo) => {
       if(t.id === id){
-        t.valueTodo = todoValue;
+        //t.valueTodo = todoValue;
       }
       this.todoSubject.next(Object.assign([], this.todos));
     })
   }
   remote(id:number){
-    this.todos.forEach((t,i) => {
-      if (t.id === id){
-        this.todos.splice(i, 1);
-        this.nextId = this.todos.reduce((prev:Todo, cur: Todo) => {
-          if(prev.id > cur.id){
-            return prev
-          }
-          return cur
-        }).id
-      }
+    if(this.todos.length == 1){
+      this.todos = [];
       this.todoSubject.next(Object.assign([], this.todos));
       this.localStorageService.todoSetLocalStorage('todos', this.todos)
-    })
+    }else if(this.todos.length > 1){
+      this.todos.forEach((t,i) => {
+        if (t.id === id){
+          this.todos.splice(i, 1);
+          this.nextId = this.todos.reduce((prev:Todo, cur: Todo) => {
+            if(prev.id > cur.id){
+              return prev
+            }
+            return cur
+          }).id
+        }
+        this.todoSubject.next(Object.assign([], this.todos));
+        this.localStorageService.todoSetLocalStorage('todos', this.todos)
+        console.log(this.todos)
+
+      })
+    }
+
   }
 
   filter(howTo: string){

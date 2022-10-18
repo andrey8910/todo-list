@@ -27,6 +27,10 @@ export class TodoListComponent implements OnInit {
     this.todoService.isDone(todoId);
   }
 
+  editTodo(todoId: number ){
+    this.todoService.edit(todoId)
+  }
+
   deleteTodo(todoId: number){
     this.todoService.remote(todoId)
   }

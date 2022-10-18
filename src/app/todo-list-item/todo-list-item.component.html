@@ -2,10 +2,15 @@
   <input class="check_done-todo" type="checkbox" (click)="isDoneItem(todo.id)" [checked]="todo.done">
   <span class="todo_id">№{{todo.id}}</span>
   <span
+    *ngIf="!showBlockEditTodo"
     #todoText
     class="todo_value"
     [ngClass]="{'todo-done_value' : todo.done}
 ">{{todo.valueTodo}}</span>
-  <button (click)="editItem(todoText, todo.id)">edit</button>
+  <span class="todo_value_edit" *ngIf="showBlockEditTodo">
+    <input type="text">
+    <button (click)="editItem(todo.id)">save</button>
+  </span>
+  <button (click)="showEditTodo()">edit</button>
   <button (click)="deleteItem(todo.id)" >x</button>
 </div>
