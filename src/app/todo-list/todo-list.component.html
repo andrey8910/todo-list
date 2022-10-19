@@ -1,8 +1,8 @@
 <div class="list_todo">
   <div class="block_todo-filter">
-    <span (click)="filterTodo('todo')">TODO</span>
-    <span (click)="filterTodo('done')">DONE</span>
-    <span (click)="filterTodo('all')">ALL</span>
+    <span routerLinkActive="active-filter" routerLink="/todo" (click)="filterTodo('todo')">TODO</span>
+    <span routerLinkActive="active-filter" routerLink="/done" (click)="filterTodo('done')">DONE</span>
+    <span routerLinkActive="active-filter" routerLink="/all" (click)="filterTodo('all')">ALL</span>
   </div>
 
   <app-todo-list-item *ngFor="let todo of todos$ | async"

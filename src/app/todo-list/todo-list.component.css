@@ -23,4 +23,7 @@
   cursor: pointer;
   background-color: lightgray;
 }
+.active-filter{
+  background-color: orange;
+}
 
