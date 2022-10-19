@@ -27,7 +27,7 @@ export class TodoAddComponent implements OnInit {
   }
 
   onSubmit(){
-    if(this.todoForm.value.valueTodo > 0){
+    if(this.todoForm.value.valueTodo.length > 0){
       this.todoService.create(this.todoForm.value);
       this.todoForm.get('valueTodo')?.setValue('');
     }else{

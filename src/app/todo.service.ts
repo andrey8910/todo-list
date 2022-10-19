@@ -62,6 +62,7 @@ export class TodoService {
   remote(id:number){
     if(this.todos.length == 1){
       this.todos = [];
+      this.nextId = 0;
       this.todoSubject.next(Object.assign([], this.todos));
       this.localStorageService.todoRemoveLocalStorage('todos')
     }else if(this.todos.length > 1){
